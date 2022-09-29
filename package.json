@@ -1,0 +1,19 @@
+{
+  "name": "ts-refactor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pothos-dev/ts-refactor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pothos-dev/ts-refactor/issues"
+  },
+  "homepage": "https://github.com/pothos-dev/ts-refactor#readme"
+}
