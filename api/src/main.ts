@@ -1,17 +1,20 @@
-import fs from "fs/promises"
-import path from "path"
-import { rootPath } from "./args"
+import fastify from "fastify"
+import { getFilePaths } from "./lib/fs"
+import cors from "@fastify/cors"
 
-foreachFile(rootPath, console.log)
+const app = fastify({ logger: true })
 
-async function foreachFile(folder: string, callback: (filePath: string) => void) {
-  const dirents = await fs.readdir(folder, { withFileTypes: true })
-  for (const dirent of dirents) {
-    const filePath = path.join(folder, dirent.name)
-    if (dirent.isDirectory()) {
-      await foreachFile(filePath, callback)
-    } else if (dirent.isFile()) {
-      callback(filePath)
-    }
+app.get("/files", async (request, reply) => {
+  return getFilePaths()
+})
+
+const start = async () => {
+  try {
+    await app.register(cors)
+    await app.listen({ port: 8080 })
+  } catch (err) {
+    app.log.error(err)
+    process.exit(1)
   }
 }
+start()
