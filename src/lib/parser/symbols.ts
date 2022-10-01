@@ -4,16 +4,15 @@ import { parseAstFromFile, walkAst } from '$lib/parser/util/typescript'
 import { find } from 'lodash'
 
 export type Symbol = {
-  module: Module
   name: string
   kind: 'function' | 'class' | 'variable' | 'type'
   isExported: boolean
 }
 
-export async function parseSymbols(module: Module) {
+export async function parseSymbols(path: string): Promise<Symbol[]> {
   const symbols: Symbol[] = []
 
-  const sourceFile = await parseAstFromFile(module.path)
+  const sourceFile = await parseAstFromFile(path)
 
   // First pass: collect all top-level symbols
   walkAst(sourceFile, (node) => {
@@ -23,7 +22,6 @@ export async function parseSymbols(module: Module) {
     // type or interface
     if (ts.isTypeAliasDeclaration(node) || ts.isInterfaceDeclaration(node)) {
       symbols.push({
-        module,
         kind: 'type',
         name: nodeName(node),
         isExported: nodeIsExported(node),
@@ -34,7 +32,6 @@ export async function parseSymbols(module: Module) {
     // function
     if (ts.isFunctionDeclaration(node)) {
       symbols.push({
-        module,
         kind: 'function',
         name: nodeName(node),
         isExported: nodeIsExported(node),
@@ -45,7 +42,6 @@ export async function parseSymbols(module: Module) {
     // class
     if (ts.isClassDeclaration(node)) {
       symbols.push({
-        module,
         kind: 'class',
         name: nodeName(node),
         isExported: nodeIsExported(node),
@@ -61,7 +57,6 @@ export async function parseSymbols(module: Module) {
       node.declarationList.forEachChild((node) => {
         if (ts.isVariableDeclaration(node)) {
           symbols.push({
-            module,
             kind: 'variable',
             name: nodeName(node),
             isExported,
@@ -75,10 +70,14 @@ export async function parseSymbols(module: Module) {
     if (ts.isExportAssignment(node)) return false
     if (ts.isExportDeclaration(node)) return false
 
-    // EndOfFileToken?
+    // These we don't are about
+    if (ts.isBlock(node)) return false
+    if (ts.isExpressionStatement(node)) return false
+    if (ts.isModuleDeclaration(node)) return false
+    if (ts.isImportDeclaration(node)) return false
     if (ts.isToken(node)) return false
 
-    throw Error(`Unhandled node type: ${ts.SyntaxKind[node.kind]}`)
+    throw Error(`Unhandled node ${ts.SyntaxKind[node.kind]} in ${module.path}`)
   })
 
   // Second pass: find named or default exports
@@ -91,7 +90,6 @@ export async function parseSymbols(module: Module) {
       node.forEachChild((node) => {
         if (ts.isIdentifier(node)) {
           symbols.push({
-            module,
             kind: 'variable', // TODO could be something else
             name: 'default',
             isExported: true,

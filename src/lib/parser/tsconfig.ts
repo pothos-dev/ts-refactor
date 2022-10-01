@@ -24,10 +24,14 @@ export async function findTsConfig(searchPath: string): Promise<string> {
   while (parts.length > 0) {
     const tsConfigPath = path.join(parts.join(path.sep), 'tsconfig.json')
     log(`searching for tsconfig.json at "${tsConfigPath}"`)
-    const stats = await fs.stat(tsConfigPath)
-    if (stats.isFile()) {
-      log(`found tsconfig.json at "${tsConfigPath}"`)
-      return tsConfigPath
+    try {
+      const stats = await fs.stat(tsConfigPath)
+      if (stats.isFile()) {
+        log(`found tsconfig.json at "${tsConfigPath}"`)
+        return tsConfigPath
+      }
+    } catch (error) {
+      // file does not exist or is not readable
     }
     parts.pop()
   }

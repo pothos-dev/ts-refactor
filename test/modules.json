@@ -1,0 +1,225 @@
+[
+  {
+    "path": "/workspaces/ts-refactor/.svelte-kit/ambient.d.ts",
+    "symbols": []
+  },
+  {
+    "path": "/workspaces/ts-refactor/vite.config.ts",
+    "symbols": [
+      {
+        "kind": "variable",
+        "name": "config",
+        "isExported": false
+      },
+      {
+        "kind": "variable",
+        "name": "default",
+        "isExported": true
+      }
+    ]
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/app.d.ts",
+    "symbols": []
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/lib/logger.ts",
+    "symbols": [
+      {
+        "kind": "function",
+        "name": "logger",
+        "isExported": true
+      }
+    ]
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/lib/parser/exports.ts",
+    "symbols": [
+      {
+        "kind": "variable",
+        "name": "log",
+        "isExported": false
+      },
+      {
+        "kind": "function",
+        "name": "parseExports",
+        "isExported": true
+      }
+    ]
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/lib/parser/files.test.ts",
+    "symbols": []
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/lib/parser/files.ts",
+    "symbols": [
+      {
+        "kind": "function",
+        "name": "findAllSourceFiles",
+        "isExported": true
+      },
+      {
+        "kind": "function",
+        "name": "parseAllSourceModules",
+        "isExported": true
+      }
+    ]
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/lib/parser/imports.ts",
+    "symbols": []
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/lib/parser/modules.ts",
+    "symbols": [
+      {
+        "kind": "type",
+        "name": "Module",
+        "isExported": true
+      },
+      {
+        "kind": "function",
+        "name": "parseModule",
+        "isExported": true
+      }
+    ]
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/lib/parser/symbols.test.ts",
+    "symbols": []
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/lib/parser/symbols.ts",
+    "symbols": [
+      {
+        "kind": "type",
+        "name": "Symbol",
+        "isExported": true
+      },
+      {
+        "kind": "function",
+        "name": "parseSymbols",
+        "isExported": true
+      },
+      {
+        "kind": "function",
+        "name": "nodeName",
+        "isExported": false
+      },
+      {
+        "kind": "function",
+        "name": "nodeIsExported",
+        "isExported": false
+      }
+    ]
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/lib/parser/tsconfig.test.ts",
+    "symbols": []
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/lib/parser/tsconfig.ts",
+    "symbols": [
+      {
+        "kind": "variable",
+        "name": "log",
+        "isExported": false
+      },
+      {
+        "kind": "type",
+        "name": "TSConfig",
+        "isExported": false
+      },
+      {
+        "kind": "function",
+        "name": "findTsConfig",
+        "isExported": true
+      },
+      {
+        "kind": "function",
+        "name": "parseTsConfig",
+        "isExported": true
+      },
+      {
+        "kind": "function",
+        "name": "findIncludedSourcePaths",
+        "isExported": true
+      }
+    ]
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/lib/parser/util/file.ts",
+    "symbols": [
+      {
+        "kind": "function",
+        "name": "readJsonFile",
+        "isExported": true
+      }
+    ]
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/lib/parser/util/path.ts",
+    "symbols": [
+      {
+        "kind": "function",
+        "name": "resolvePath",
+        "isExported": true
+      },
+      {
+        "kind": "function",
+        "name": "resolveGlobs",
+        "isExported": true
+      }
+    ]
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/lib/parser/util/typescript.ts",
+    "symbols": [
+      {
+        "kind": "function",
+        "name": "parseAstFromFile",
+        "isExported": true
+      },
+      {
+        "kind": "function",
+        "name": "walkAst",
+        "isExported": true
+      }
+    ]
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/routes/files/+page.server.ts",
+    "symbols": [
+      {
+        "kind": "variable",
+        "name": "load",
+        "isExported": true
+      }
+    ]
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/routes/+layout.svelte",
+    "symbols": []
+  },
+  {
+    "path": "/workspaces/ts-refactor/src/routes/files/+page.svelte",
+    "symbols": [
+      {
+        "kind": "variable",
+        "name": "data",
+        "isExported": true
+      },
+      {
+        "kind": "class",
+        "name": "<anonymous>",
+        "isExported": false
+      },
+      {
+        "kind": "class",
+        "name": "<anonymous>",
+        "isExported": false
+      }
+    ]
+  }
+]
