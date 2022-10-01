@@ -4,7 +4,7 @@ import path from 'path'
 import { logger } from '$lib/logger'
 import { readJsonFile } from '$lib/parser/util/file'
 
-const log = logger('tsconfig', true)
+const log = logger('tsconfig', false)
 
 type TSConfig = {
   extends: string
@@ -38,27 +38,27 @@ export async function findTsConfig(searchPath: string): Promise<string> {
 // applying any `extends` clauses found in the file.
 export async function parseTsConfig(tsConfigPath: string): Promise<TSConfig> {
   try {
-    const config = await readJsonFile<TSConfig>(tsConfigPath)
-    log(`parsed tsconfig at "${tsConfigPath}":`, config)
+    const tsConfig = await readJsonFile<TSConfig>(tsConfigPath)
+    log(`parsed tsconfig at "${tsConfigPath}":`, tsConfig)
 
     // Paths in tsconfig.json are relative to the tsconfig.json file itself.
     // Before we merge this config with any other configs that extend from it,
     // convert those relative paths into absolute ones.
-    if (config.include) {
-      config.include = config.include.map((relPath) =>
+    if (tsConfig.include) {
+      tsConfig.include = tsConfig.include.map((relPath) =>
         resolvePath(tsConfigPath, relPath)
       )
-      log('converted include paths to absolute ones', config.include)
+      log('converted include paths to absolute ones', tsConfig.include)
     }
 
-    if (config.extends) {
+    if (tsConfig.extends) {
       log("tsconfig extends from another tsconfig, let's merge them")
 
-      const extendsPath = resolvePath(tsConfigPath, config.extends)
-      const extendsConfig = await parseTsConfig(extendsPath)
-      return mergeConfigs(extendsConfig, config)
+      const extendedPath = resolvePath(tsConfigPath, tsConfig.extends)
+      const extendedTsConfig = await parseTsConfig(extendedPath)
+      return mergeConfigs(extendedTsConfig, tsConfig)
     } else {
-      return config
+      return tsConfig
     }
   } catch (error) {
     throw Error(`Failed to parse ${tsConfigPath}: ${error}`)
@@ -77,7 +77,9 @@ export async function parseTsConfig(tsConfigPath: string): Promise<TSConfig> {
   }
 }
 
-export async function getIncludedFiles(config: TSConfig): Promise<string[]> {
+export async function findIncludedSourcePaths(
+  config: TSConfig
+): Promise<string[]> {
   const files = await resolveGlobs('', config.include ?? [])
   log('Resolving include globs from Config', files)
   return files

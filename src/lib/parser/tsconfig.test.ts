@@ -1,6 +1,6 @@
 import {
   findTsConfig,
-  getIncludedFiles,
+  findIncludedSourcePaths,
   parseTsConfig,
 } from '$lib/parser/tsconfig'
 import { describe, it, expect } from 'vitest'
@@ -13,8 +13,8 @@ describe('tsconfig', () => {
 
   it('parses tsconfig.json', async () => {
     const path = await findTsConfig(process.cwd())
-    const config = await parseTsConfig(path)
-    expect(config).toMatchObject({
+    const tsConfig = await parseTsConfig(path)
+    expect(tsConfig).toMatchObject({
       compilerOptions: {
         baseUrl: expect.any(String),
         paths: expect.any(Object),
@@ -26,8 +26,8 @@ describe('tsconfig', () => {
 
   it('finds included files', async () => {
     const path = await findTsConfig(process.cwd())
-    const config = await parseTsConfig(path)
-    const files = await getIncludedFiles(config)
+    const tsConfig = await parseTsConfig(path)
+    const files = await findIncludedSourcePaths(tsConfig)
     expect(files.length).toBeGreaterThan(0)
   })
 })
