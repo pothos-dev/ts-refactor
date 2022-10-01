@@ -1,14 +1,15 @@
+import { resolveGlobs } from '$lib/parser/pathUtils'
+import { findTsConfig, parseTsConfig } from '$lib/parser/tsconfig'
 import fs from 'fs/promises'
 import path from 'path'
 
 const rootDir = process.cwd()
 
 export async function getFileNames(): Promise<string[]> {
-  const fileNames: string[] = []
-  for await (const fileName of walk(rootDir)) {
-    fileNames.push(fileName)
-  }
-  return fileNames
+  const tsConfigPath = await findTsConfig(rootDir)
+  const tsConfig = await parseTsConfig(tsConfigPath)
+  const files = await resolveGlobs(rootDir, tsConfig.include)
+  return files
 }
 
 async function* walk(dir: string): AsyncGenerator<string> {
