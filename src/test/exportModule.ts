@@ -1,5 +1,7 @@
 export type Foo = { bar: string }
 
+export interface Bar {}
+
 export function createFoo() {
   return { bar: 'baz' }
 }
