@@ -17,7 +17,6 @@ export async function resolveGlobs(
       (pattern) =>
         new Promise<string[]>((resolve, reject) => {
           const absolutePattern = resolvePath(basePath, pattern)
-
           return glob(absolutePattern, {}, (error, matches) => {
             if (error) reject(error)
             else resolve(matches)
@@ -25,6 +24,5 @@ export async function resolveGlobs(
         })
     )
   )
-
   return uniq(matches.flat())
 }

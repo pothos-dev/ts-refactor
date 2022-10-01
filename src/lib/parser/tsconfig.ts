@@ -1,8 +1,8 @@
-import { resolvePath, resolveGlobs } from '$lib/parser/pathUtils'
+import { resolvePath, resolveGlobs } from '$lib/parser/util/path'
 import fs from 'fs/promises'
 import path from 'path'
-import JSON5 from 'json5'
 import { logger } from '$lib/logger'
+import { readJsonFile } from '$lib/parser/util/file'
 
 const log = logger('tsconfig', true)
 
@@ -38,8 +38,7 @@ export async function findTsConfig(searchPath: string): Promise<string> {
 // applying any `extends` clauses found in the file.
 export async function parseTsConfig(tsConfigPath: string): Promise<TSConfig> {
   try {
-    const fileContent = await fs.readFile(tsConfigPath, 'utf-8')
-    const config: TSConfig = JSON5.parse(fileContent)
+    const config = await readJsonFile<TSConfig>(tsConfigPath)
     log(`parsed tsconfig at "${tsConfigPath}":`, config)
 
     // Paths in tsconfig.json are relative to the tsconfig.json file itself.
