@@ -1,5 +1,4 @@
 import ts from 'typescript'
-import type { Module } from '$lib/parser/modules'
 import { parseAstFromFile, walkAst } from '$lib/parser/util/typescript'
 import { find } from 'lodash'
 
@@ -76,8 +75,9 @@ export async function parseSymbols(path: string): Promise<Symbol[]> {
     if (ts.isModuleDeclaration(node)) return false
     if (ts.isImportDeclaration(node)) return false
     if (ts.isToken(node)) return false
+    if (ts.isLabeledStatement(node)) return false
 
-    throw Error(`Unhandled node ${ts.SyntaxKind[node.kind]} in ${module.path}`)
+    throw Error(`Unhandled node ${ts.SyntaxKind[node.kind]} in ${path}`)
   })
 
   // Second pass: find named or default exports

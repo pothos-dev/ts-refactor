@@ -2,7 +2,14 @@ import ts from 'typescript'
 import fs from 'fs/promises'
 
 export async function parseAstFromFile(path: string): Promise<ts.SourceFile> {
-  const fileContent = await fs.readFile(path, 'utf-8')
+  let fileContent = await fs.readFile(path, 'utf-8')
+
+  // if (path.endsWith('.svelte')) {
+  //   fileContent =
+  //     fileContent.match(/<script(| lang="ts")>(.*)<\/script>/s)?.[2] || ''
+
+  //   console.log(fileContent)
+  // }
 
   const sourceFile = ts.createSourceFile(
     path,

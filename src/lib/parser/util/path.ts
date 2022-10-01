@@ -26,3 +26,18 @@ export async function resolveGlobs(
   )
   return uniq(matches.flat())
 }
+
+// Returns the paths of all ancestor directories of the given path.
+// First element is the parent directory, last element is the root directory.
+export function getAncestorDirectoryPaths(filePath: string): string[] {
+  const directories = []
+
+  let currentPath = path.dirname(filePath)
+  directories.push(currentPath)
+  while (currentPath != '/') {
+    currentPath = path.dirname(currentPath)
+    directories.push(currentPath)
+  }
+
+  return directories
+}
