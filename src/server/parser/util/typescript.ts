@@ -4,12 +4,11 @@ import fs from 'fs/promises'
 export async function parseAstFromFile(path: string): Promise<ts.SourceFile> {
   let fileContent = await fs.readFile(path, 'utf-8')
 
-  // if (path.endsWith('.svelte')) {
-  //   fileContent =
-  //     fileContent.match(/<script(| lang="ts")>(.*)<\/script>/s)?.[2] || ''
-
-  //   console.log(fileContent)
-  // }
+  if (path.endsWith('.svelte')) {
+    // In Svelte Files, only parse the <script/> block
+    fileContent =
+      fileContent.match(/<script(| lang="ts")>(.*)<\/script>/s)?.[2] || ''
+  }
 
   const sourceFile = ts.createSourceFile(
     path,
@@ -27,7 +26,13 @@ export function walkAst(
   const cont = visitor(ast)
   if (!cont) return
 
-  ts.forEachChild(ast, (child) => {
-    walkAst(child, visitor)
+  ts.forEachChild(ast, child => {
+    try {
+      walkAst(child, visitor)
+    } catch (error) {
+      const kind = ts.SyntaxKind[child.kind]
+      const pos = `${child.pos}-${child.end}`
+      throw Error(`Handling ${kind}[${pos}]:\n${error}`)
+    }
   })
 }

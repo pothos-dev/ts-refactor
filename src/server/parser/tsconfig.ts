@@ -55,7 +55,7 @@ export async function parseTsConfig(tsConfigPath: string): Promise<TSConfig> {
       return tsConfig
     }
   } catch (error) {
-    throw Error(`Failed to parse ${tsConfigPath}: ${error}`)
+    throw Error(`Failed to parse ${tsConfigPath}:\n${error}`)
   }
 
   function mergeConfigs(config: TSConfig, extendsConfig: TSConfig) {
