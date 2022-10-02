@@ -7,7 +7,13 @@ const config = {
   // for more information about preprocessors
   preprocess: preprocess({ postcss: true }),
 
-  kit: { adapter: adapter() },
+  kit: {
+    adapter: adapter(),
+    alias: {
+      '$server/*': './src/server/*',
+      '$types/*': './src/types/*',
+    },
+  },
 }
 
 export default config

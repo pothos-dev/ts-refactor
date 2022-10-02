@@ -1,12 +1,7 @@
 import ts from 'typescript'
-import { parseAstFromFile, walkAst } from '$lib/parser/util/typescript'
+import { parseAstFromFile, walkAst } from '$server/parser/util/typescript'
 import { find } from 'lodash'
-
-export type Symbol = {
-  name: string
-  kind: 'function' | 'class' | 'variable' | 'type'
-  isExported: boolean
-}
+import type { Symbol } from '$types/Symbol'
 
 export async function parseSymbols(path: string): Promise<Symbol[]> {
   const symbols: Symbol[] = []
@@ -14,7 +9,7 @@ export async function parseSymbols(path: string): Promise<Symbol[]> {
   const sourceFile = await parseAstFromFile(path)
 
   // First pass: collect all top-level symbols
-  walkAst(sourceFile, (node) => {
+  walkAst(sourceFile, node => {
     // Entry node is a SourceFile, we should walk into it
     if (ts.isSourceFile(node)) return true
 
@@ -53,7 +48,7 @@ export async function parseSymbols(path: string): Promise<Symbol[]> {
       // A variable statement can export multiple symbols at once.
       // All of them share the `isExported` flag of the statement.
       const isExported = nodeIsExported(node)
-      node.declarationList.forEachChild((node) => {
+      node.declarationList.forEachChild(node => {
         if (ts.isVariableDeclaration(node)) {
           symbols.push({
             kind: 'variable',
@@ -81,13 +76,13 @@ export async function parseSymbols(path: string): Promise<Symbol[]> {
   })
 
   // Second pass: find named or default exports
-  walkAst(sourceFile, (node) => {
+  walkAst(sourceFile, node => {
     // Entry node is a SourceFile, we should walk into it
     if (ts.isSourceFile(node)) return true
 
     // This is the default export
     if (ts.isExportAssignment(node)) {
-      node.forEachChild((node) => {
+      node.forEachChild(node => {
         if (ts.isIdentifier(node)) {
           symbols.push({
             kind: 'variable', // TODO could be something else
@@ -124,5 +119,5 @@ function nodeName(node: ts.NamedDeclaration): string {
 function nodeIsExported(node: ts.Node): boolean {
   if (!ts.canHaveModifiers(node)) return false
   const mods = ts.getModifiers(node) ?? []
-  return mods.some((mod) => mod.kind === ts.SyntaxKind.ExportKeyword)
+  return mods.some(mod => mod.kind === ts.SyntaxKind.ExportKeyword)
 }

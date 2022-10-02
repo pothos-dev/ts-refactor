@@ -1,21 +1,11 @@
-import { resolvePath, resolveGlobs } from '$lib/parser/util/path'
+import { resolvePath, resolveGlobs } from '$server/parser/util/path'
 import fs from 'fs/promises'
 import path from 'path'
+import { readJsonFile } from '$server/parser/util/file'
+import type { TSConfig } from '$types/TSConfig'
 import { logger } from '$lib/logger'
-import { readJsonFile } from '$lib/parser/util/file'
 
 const log = logger('tsconfig', false)
-
-type TSConfig = {
-  extends: string
-
-  compilerOptions: {
-    baseUrl: string
-    paths: Record<string, string[]>
-  }
-  include?: string[]
-  exclude?: string[]
-}
 
 // Given a path (file or directory), finds the nearest tsconfig.json file
 // in the directory tree above it, or throws an Error.
@@ -49,7 +39,7 @@ export async function parseTsConfig(tsConfigPath: string): Promise<TSConfig> {
     // Before we merge this config with any other configs that extend from it,
     // convert those relative paths into absolute ones.
     if (tsConfig.include) {
-      tsConfig.include = tsConfig.include.map((relPath) =>
+      tsConfig.include = tsConfig.include.map(relPath =>
         resolvePath(tsConfigPath, relPath)
       )
       log('converted include paths to absolute ones', tsConfig.include)

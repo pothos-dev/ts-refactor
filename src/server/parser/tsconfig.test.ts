@@ -2,7 +2,7 @@ import {
   findTsConfig,
   findIncludedSourcePaths,
   parseTsConfig,
-} from '$lib/parser/tsconfig'
+} from '$server/parser/tsconfig'
 import { describe, it, expect } from 'vitest'
 
 describe('tsconfig', () => {
