@@ -32,3 +32,11 @@ export function getAncestors(node: FileSystemNode): DirectoryNode[] {
   }
   return ancestors
 }
+
+// Returns true if `node` is an ancestor of `other`.
+export function isAncestorOrEqual(
+  node: DirectoryNode,
+  other: DirectoryNode
+): boolean {
+  return node == other || getAncestors(other).includes(node)
+}

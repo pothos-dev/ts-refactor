@@ -4,7 +4,7 @@
   import FileSystemView from '$components/FileSystemView/FileSystemView.svelte'
 
   export let data: PageData
-  let directoryNode: DirectoryNode = data.fileSystemNode
+  let selectedDirectory: DirectoryNode = data.fileSystemNode
 </script>
 
-<FileSystemView bind:directoryNode />
+<FileSystemView bind:selectedDirectory />
