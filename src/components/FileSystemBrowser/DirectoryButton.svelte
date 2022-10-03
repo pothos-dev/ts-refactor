@@ -1,5 +1,5 @@
 <script lang="ts">
-  import NodeButton from '$components/FileSystemView/NodeButton.svelte'
+  import NodeButton from '$components/FileSystemBrowser/NodeButton.svelte'
   import type { DirectoryNode } from '$types/FileSystem'
 
   export let node: DirectoryNode

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import NavBar from '$components/FileSystemView/NavBar.svelte'
-  import DirectoryView from '$components/FileSystemView/DirectoryView.svelte'
+  import NavBar from '$components/FileSystemBrowser/NavBar.svelte'
+  import DirectoryView from '$components/FileSystemBrowser/DirectoryView.svelte'
   import { getAncestors, type DirectoryNode } from '$types/FileSystem'
   import { reverse } from 'lodash'
 

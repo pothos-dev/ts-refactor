@@ -1,10 +1,16 @@
 <script lang="ts">
   import type { PageData } from './$types'
   import type { DirectoryNode } from '$types/FileSystem'
-  import FileSystemView from '$components/FileSystemView/FileSystemView.svelte'
+  import FileSystemBrowser from '$components/FileSystemBrowser/FileSystemBrowser.svelte'
+  import SymbolBrowser from '$components/SymbolBrowser/SymbolBrowser.svelte'
 
   export let data: PageData
   let selectedDirectory: DirectoryNode = data.fileSystemNode
 </script>
 
-<FileSystemView bind:selectedDirectory />
+<div class="absolute left-0 top-0 right-0 bottom-0">
+  <div class="flex flex-row justify-between h-full">
+    <FileSystemBrowser bind:selectedDirectory />
+    <SymbolBrowser />
+  </div>
+</div>

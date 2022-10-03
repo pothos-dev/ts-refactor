@@ -1,6 +1,6 @@
 <script lang="ts">
-  import DirectoryButton from '$components/FileSystemView/DirectoryButton.svelte'
-  import FileButton from '$components/FileSystemView/FileButton.svelte'
+  import DirectoryButton from '$components/FileSystemBrowser/DirectoryButton.svelte'
+  import FileButton from '$components/FileSystemBrowser/FileButton.svelte'
   import {
     isAncestorOrEqual,
     type DirectoryNode,
