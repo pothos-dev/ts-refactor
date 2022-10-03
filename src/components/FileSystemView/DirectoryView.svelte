@@ -1,12 +1,13 @@
 <script lang="ts">
-  import Button from '$components/Button.svelte'
+  import DirectoryButton from '$components/FileSystemView/DirectoryButton.svelte'
+  import FileButton from '$components/FileSystemView/FileButton.svelte'
   import type { DirectoryNode, FileSystemNode } from '$types/FileSystem'
   import { sortBy } from 'lodash'
 
   export let directoryNode: DirectoryNode
   $: nodes = sortBy(directoryNode.children, node => node.type)
 
-  const onClick = (node: FileSystemNode) => {
+  const selectNode = (node: FileSystemNode) => {
     if (node.type == 'directory') {
       directoryNode = node
     } else {
@@ -17,11 +18,11 @@
 
 <div class="flex flex-col space-y-0">
   {#each nodes as node, i}
-    <Button
-      class={node.type == 'directory' ? 'bg-blue-50' : 'bg-green-50'}
-      on:click={() => onClick(node)}
-    >
-      {node.relPath}
-    </Button>
+    {#if node.type == 'directory'}
+      <DirectoryButton {node} on:click={() => selectNode(node)} />
+    {/if}
+    {#if node.type == 'file'}
+      <FileButton {node} on:click={() => selectNode(node)} />
+    {/if}
   {/each}
 </div>

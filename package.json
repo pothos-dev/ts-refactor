@@ -13,6 +13,7 @@
     "test": "vitest"
   },
   "devDependencies": {
+    "@iconify/svelte": "^3.0.0",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
     "@types/glob": "^8.0.0",
