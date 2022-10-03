@@ -37,31 +37,26 @@ export async function parseFileSystemNode(
     let currentNode: FileSystemNode = fileNode
     for (const dirPath of getAncestorDirectoryPaths(fileNode.path)) {
       let parentNode = directories[dirPath]
-
-      if (parentNode) {
-        // Existing node just gets updated with the new child
-        parentNode.meta = mergeMetadata(parentNode.meta, currentNode.meta)
-        parentNode.children.push(currentNode)
-        currentNode.parent = parentNode
-        break
-      }
-
       if (!parentNode) {
-        // New node gets created and added to the tree
         parentNode = {
           type: 'directory',
-          children: [currentNode],
+          children: [],
 
           path: dirPath,
           relPath: path.basename(dirPath),
           parent: null,
 
-          meta: currentNode.meta,
+          meta: { numExports: 0, numSymbols: 0 },
         }
         directories[dirPath] = parentNode
-        currentNode.parent = parentNode
       }
 
+      parentNode.meta = mergeMetadata(parentNode.meta, fileNode.meta)
+      if (!parentNode.children.includes(currentNode)) {
+        parentNode.children.push(currentNode)
+      }
+
+      currentNode.parent = parentNode
       currentNode = parentNode
     }
   }

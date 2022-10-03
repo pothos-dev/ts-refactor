@@ -3,18 +3,22 @@
   import IconText from '$components/IconText.svelte'
   import type { FileSystemNode } from '$types/FileSystem'
 
-  let clazz: string
-  export { clazz as class }
+  let className: string
+  export { className as class }
   export let node: FileSystemNode
 </script>
 
-<Button class={clazz} on:click>
+<Button class={className} on:click>
   <div class="flex flex-row items-center">
     {node.relPath}
     <div class="flex-1" />
-    <IconText class="ml-2" icon="carbon:export" text={node.meta.numExports} />
     <IconText
-      class="ml-2"
+      class="w-12 justify-end"
+      icon="carbon:export"
+      text={node.meta.numExports}
+    />
+    <IconText
+      class="w-12 justify-end"
       icon="codicon:symbol-method"
       text={node.meta.numSymbols}
     />
