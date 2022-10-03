@@ -1,6 +1,4 @@
 <script lang="ts">
-  import DirectoryButton from '$components/FileSystemBrowser/DirectoryButton.svelte'
-  import FileButton from '$components/FileSystemBrowser/FileButton.svelte'
   import NodeButton from '$components/FileSystemBrowser/NodeButton.svelte'
   import {
     isAncestorOrEqual,
@@ -19,7 +17,7 @@
   const classNames = (node: FileSystemNode) => {
     const color = node.type == 'directory' ? 'bg-blue-50' : 'bg-green-50'
     const border = isAncestorOrEqual(node, selectedNode)
-      ? 'border border-solid border-black'
+      ? 'border border-solid border-black z-10 shadow-lg'
       : 'border border-solid border-transparent'
 
     return `${color} ${border}`

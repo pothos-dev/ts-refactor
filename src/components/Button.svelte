@@ -4,7 +4,7 @@
 </script>
 
 <div
-  class="p-1 border cursor-pointer shadow-md border-transparent hover:border-gray-700 hover:z-10 {className}"
+  class="p-1 border cursor-pointer shadow-md border-transparent hover:z-10 {className}"
   on:click
 >
   <slot />
