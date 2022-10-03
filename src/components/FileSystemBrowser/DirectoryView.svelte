@@ -1,6 +1,7 @@
 <script lang="ts">
   import DirectoryButton from '$components/FileSystemBrowser/DirectoryButton.svelte'
   import FileButton from '$components/FileSystemBrowser/FileButton.svelte'
+  import NodeButton from '$components/FileSystemBrowser/NodeButton.svelte'
   import {
     isAncestorOrEqual,
     type DirectoryNode,
@@ -8,30 +9,29 @@
   } from '$types/FileSystem'
   import { sortBy } from 'lodash'
 
-  export let selectedDirectory: DirectoryNode
+  export let selectedNode: FileSystemNode
   export let viewedDirectory: DirectoryNode
   $: nodes = sortBy(viewedDirectory.children, node => node.type)
 
   const selectNode = (node: FileSystemNode) => {
-    if (node.type == 'directory') {
-      selectedDirectory = node
-    } else {
-      // TODO
-    }
+    selectedNode = node
+  }
+  const classNames = (node: FileSystemNode) => {
+    const color = node.type == 'directory' ? 'bg-blue-50' : 'bg-green-50'
+    const border = isAncestorOrEqual(node, selectedNode)
+      ? 'border border-solid border-black'
+      : 'border border-solid border-transparent'
+
+    return `${color} ${border}`
   }
 </script>
 
 <div class="flex flex-col space-y-0">
-  {#each nodes as node, i}
-    {#if node.type == 'directory'}
-      <DirectoryButton
-        {node}
-        on:click={() => selectNode(node)}
-        bordered={isAncestorOrEqual(node, selectedDirectory)}
-      />
-    {/if}
-    {#if node.type == 'file'}
-      <FileButton {node} on:click={() => selectNode(node)} />
-    {/if}
+  {#each nodes as node}
+    <NodeButton
+      {node}
+      class={classNames(node)}
+      on:click={() => selectNode(node)}
+    />
   {/each}
 </div>

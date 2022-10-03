@@ -5,12 +5,12 @@
   import SymbolBrowser from '$components/SymbolBrowser/SymbolBrowser.svelte'
 
   export let data: PageData
-  let selectedDirectory: DirectoryNode = data.fileSystemNode
+  let selectedNode: DirectoryNode = data.fileSystemNode
 </script>
 
 <div class="absolute left-0 top-0 right-0 bottom-0">
   <div class="flex flex-row justify-between h-full">
-    <FileSystemBrowser bind:selectedDirectory />
-    <SymbolBrowser />
+    <FileSystemBrowser bind:selectedNode />
+    <SymbolBrowser {selectedNode} />
   </div>
 </div>

@@ -23,8 +23,8 @@ export type DirectoryNode = {
 }
 
 // Returns the ancestors of the given path, direct parent first.
-export function getAncestors(node: FileSystemNode): DirectoryNode[] {
-  const ancestors: DirectoryNode[] = []
+export function getAncestorsOrEqual(node: FileSystemNode): FileSystemNode[] {
+  const ancestors: FileSystemNode[] = [node]
   let parent = node.parent
   while (parent) {
     ancestors.push(parent)
@@ -35,8 +35,13 @@ export function getAncestors(node: FileSystemNode): DirectoryNode[] {
 
 // Returns true if `node` is an ancestor of `other`.
 export function isAncestorOrEqual(
-  node: DirectoryNode,
-  other: DirectoryNode
+  node: FileSystemNode,
+  other: FileSystemNode
 ): boolean {
-  return node == other || getAncestors(other).includes(node)
+  return getAncestorsOrEqual(other).includes(node)
+}
+
+export function getDescendantsOrEqual(node: FileSystemNode): FileSystemNode[] {
+  if (node.type === 'file') return [node]
+  return node.children.flatMap(getDescendantsOrEqual)
 }
