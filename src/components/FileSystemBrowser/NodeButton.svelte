@@ -14,12 +14,12 @@
     <div class="flex-1" />
     <IconText
       class="w-12 justify-end"
-      rightIcon="carbon:export"
+      rightIcon={'export'}
       text={node.meta.numExports}
     />
     <IconText
       class="w-12 justify-end"
-      rightIcon="codicon:symbol-method"
+      rightIcon={'symbol'}
       text={node.meta.numSymbols}
     />
   </div>

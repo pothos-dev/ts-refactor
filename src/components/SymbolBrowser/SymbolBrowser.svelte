@@ -14,10 +14,10 @@
     <Button>
       <IconText
         leftIcon={symbol.isExported
-          ? 'carbon:export'
+          ? 'export'
           : symbol.importedFrom
-          ? 'bytesize:import'
-          : 'codicon:symbol-method'}
+          ? 'import'
+          : 'symbol'}
         text={symbol.name}
       />
     </Button>
