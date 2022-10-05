@@ -3,4 +3,5 @@ export type Symbol = {
   kind: 'function' | 'class' | 'variable' | 'type'
   isExported: boolean
   exportedName?: string
+  importedFrom?: string
 }

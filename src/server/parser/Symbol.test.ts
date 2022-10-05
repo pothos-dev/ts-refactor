@@ -1,4 +1,4 @@
-import { parseSymbols } from '$server/parser/symbols'
+import { parseSymbols } from '$server/parser/Symbol'
 import { describe, expect, it } from 'vitest'
 
 describe('sybols parser', () => {

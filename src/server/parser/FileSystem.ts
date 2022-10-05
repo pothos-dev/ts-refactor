@@ -1,9 +1,9 @@
-import { getMetadata, mergeMetadata, parseModule } from '$server/parser/modules'
+import { getMetadata, mergeMetadata, parseModule } from '$server/parser/Module'
 import {
   findTsConfig,
   findIncludedSourcePaths,
   parseTsConfig,
-} from '$server/parser/tsconfig'
+} from '$server/parser/TSConfig'
 import { getAncestorDirectoryPaths } from '$server/parser/util/path'
 import path from 'path'
 import type { DirectoryNode, FileNode, FileSystemNode } from '$types/FileSystem'

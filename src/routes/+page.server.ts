@@ -1,4 +1,4 @@
-import { parseFileSystemNode } from '$server/parser/files'
+import { parseFileSystemNode } from '$server/parser/FileSystem'
 import type { PageServerLoad } from './$types'
 
 export const load: PageServerLoad = async () => {

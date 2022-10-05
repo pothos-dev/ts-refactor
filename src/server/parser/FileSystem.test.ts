@@ -1,4 +1,4 @@
-import { parseAllSourceModules } from '$server/parser/files'
+import { parseAllSourceModules } from '$server/parser/FileSystem'
 import { it } from 'vitest'
 import fs from 'fs/promises'
 

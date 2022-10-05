@@ -1,4 +1,4 @@
-import { parseSymbols } from '$server/parser/symbols'
+import { parseSymbols } from '$server/parser/Symbol'
 import type { Module, ModuleMetadata } from '$types/Module'
 
 export async function parseModule(path: string): Promise<Module> {
