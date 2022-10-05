@@ -13,6 +13,36 @@ export async function parseSymbols(path: string): Promise<Symbol[]> {
       // Entry node is a SourceFile, we should walk into it
       if (ts.isSourceFile(node)) return true
 
+      // Import
+      if (ts.isImportDeclaration(node)) {
+        const importedFrom = ts.isStringLiteral(node.moduleSpecifier)
+          ? node.moduleSpecifier.text
+          : 'UNKNOWN'
+
+        if (node.importClause?.name) {
+          const name = node.importClause.name.text
+          symbols.push({
+            kind: 'import',
+            isExported: false,
+            name,
+            importedFrom,
+          })
+        }
+        node.importClause?.namedBindings?.forEachChild(child => {
+          if (ts.isImportSpecifier(child)) {
+            const name = child.name.text
+            const importedName = child.propertyName?.text ?? name
+            symbols.push({
+              kind: 'import',
+              isExported: false,
+              name,
+              importedName,
+              importedFrom,
+            })
+          }
+        })
+      }
+
       // type or interface
       if (ts.isTypeAliasDeclaration(node) || ts.isInterfaceDeclaration(node)) {
         symbols.push({

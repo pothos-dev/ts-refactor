@@ -13,7 +13,11 @@
   {#each symbols as symbol}
     <Button>
       <IconText
-        leftIcon={symbol.isExported ? 'carbon:export' : ''}
+        leftIcon={symbol.isExported
+          ? 'carbon:export'
+          : symbol.importedFrom
+          ? 'bytesize:import'
+          : 'codicon:symbol-method'}
         text={symbol.name}
       />
     </Button>
