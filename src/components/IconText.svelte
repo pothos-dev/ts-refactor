@@ -1,6 +1,6 @@
 <script lang="ts">
   import Icon from '@iconify/svelte'
-  import { Icons, type IconType } from 'src/constants/Icons'
+  import { Icons, type IconType } from '$constants/Icons'
 
   export let leftIcon: IconType | null = null
   export let rightIcon: IconType | null = null
