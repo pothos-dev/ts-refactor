@@ -24,7 +24,7 @@
   }
 </script>
 
-<div class="flex flex-col space-y-0">
+<div class="flex flex-col space-y-0 bg-white bg-opacity-90 shadow-sm">
   {#each nodes as node}
     <NodeButton
       {node}
